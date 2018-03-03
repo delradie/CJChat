@@ -1,0 +1,11 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    @using (Html.BeginForm("Identify", "Home", FormMethod.Post))
+    {
+    <p class="lead">Enter a username to continue.</p>
+    <p>@Html.TextBox("userName") <input type="submit" value="Enter" /></p>
+    }
+</div>
