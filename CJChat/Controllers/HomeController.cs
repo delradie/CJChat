@@ -20,9 +20,18 @@ namespace CJChat.Controllers
         }
 
         [HttpPost]
-        public ActionResult Identify(String userName)
+        public ActionResult Identify(String userName, bool remember)
         {
             Session["UserName"] = userName;
+
+            if(remember)
+            {
+                Response.Cookies.Add(new HttpCookie("NickerBoxUser", userName)
+                {
+                    Expires = DateTime.UtcNow.AddYears(1)
+                });
+            }
+
             return new RedirectResult("~/Home/Chat");
         }
 

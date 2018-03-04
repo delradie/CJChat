@@ -17,5 +17,15 @@ namespace CJChat
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+
+        protected void Session_Start()
+        {
+            HttpCookie UserCookie = Request.Cookies.Get("NickerBoxUser");
+
+            if(UserCookie != null && !String.IsNullOrWhiteSpace(UserCookie.Value))
+            {
+                Session["UserName"] = UserCookie.Value;
+            }
+        }
     }
 }
