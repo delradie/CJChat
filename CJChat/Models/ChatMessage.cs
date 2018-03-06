@@ -5,12 +5,14 @@ using System.Web;
 
 namespace CJChat.Models
 {
-    public class ChatUser
+    public class ChatMessage
     {
         public String UserName { get; set; }
 
-        public String IPAddress { get; set; }
+        public DateTime TimeStamp { get; set; }
 
-        public String ConnectionId { get; set; }
+        public String Message { get; set; }
+
+        public String SoueceIp { get; set; }
     }
 }

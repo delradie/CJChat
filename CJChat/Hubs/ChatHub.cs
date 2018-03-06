@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
+using CJChat.Classes;
 using CJChat.Models;
 using Microsoft.AspNet.SignalR;
 
@@ -11,6 +13,8 @@ namespace CJChat.Hubs
     public class ChatHub : Hub
     {
         public static List<ChatUser> _users = new List<ChatUser>();
+
+        public static EventHandler<MessageReceivedEventArgs> OnMessageReceived;
 
         #region connection handlers
 
@@ -77,7 +81,29 @@ namespace CJChat.Hubs
 
         public void Send(String userName, String message)
         {
-            Clients.All.AddMessage(userName, message);
+            DateTime TimeStamp = DateTime.UtcNow;
+
+            Clients.All.AddMessage(userName, message, TimeStamp.ToString("g"));
+
+            String SenderIp = Context.Request.GetRemoteIpAddress();
+
+            SignalMessageReceveived(userName, SenderIp, TimeStamp, message);
+        }
+        #endregion
+
+        #region event raising
+        private void SignalMessageReceveived(String userName, String sourceIp, DateTime timeStamp, String message)
+        {
+            ChatMessage Message = new ChatMessage()
+            {
+                UserName = userName,
+                SoueceIp = sourceIp,
+                TimeStamp = timeStamp,
+                Message = message
+            };
+
+            Interlocked.CompareExchange(ref OnMessageReceived, null, null)?.Invoke(this, new MessageReceivedEventArgs(Message));
+
         }
         #endregion
     }

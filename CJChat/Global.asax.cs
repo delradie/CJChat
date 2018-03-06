@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CJChat.Classes;
+using CJChat.Hubs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,6 +18,8 @@ namespace CJChat
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            ChatHub.OnMessageReceived += MessageStore.MessageReceivedHandler;
         }
 
         protected void Session_Start()

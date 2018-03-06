@@ -160,12 +160,15 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="CustomExtensions.cs" />
+    <Compile Include="Classes\MessageReceivedEventArgs.cs" />
+    <Compile Include="Classes\CustomExtensions.cs" />
+    <Compile Include="Classes\MessageStore.cs" />
     <Compile Include="Hubs\ChatHub.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ChatMessage.cs" />
     <Compile Include="Models\ChatUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
