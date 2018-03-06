@@ -8,7 +8,7 @@ namespace CJChat.Classes
 {
     public static class MessageStore
     {
-        private const Int32 HistoryLimit = 5;
+        private const Int32 HistoryLimit = 50;
 
         public static List<ChatMessage> Messages { get; private set; }
 
