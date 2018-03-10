@@ -7,7 +7,7 @@
                 <ul id="discussion">
                     @foreach (CJChat.Models.ChatMessage message in CJChat.Classes.MessageStore.Messages.OrderBy(x=>x.TimeStamp))
     {
-                <li><strong title="@message.TimeStamp.ToString("g")">@message.UserName </strong>: @message.Message</li>
+                <li><strong>@message.UserName </strong>: @message.Message <span class="timestamp">@message.TimeStamp.ToString("g")</span></li>
     }
                 </ul>
             </div>
@@ -55,8 +55,8 @@
             // Create a function that the hub can call back to display messages.
             chat.client.addMessage = function (name, message, timestamp) {
                 // Add the message to the page.
-                $('#discussion').append('<li><strong title="' + htmlEncode(timestamp) + '">' + htmlEncode(name)
-                    + '</strong>: ' + htmlEncode(message) + '</li>');
+                $('#discussion').append('<li><strong>' + htmlEncode(name)
+                    + '</strong>: ' + htmlEncode(message) + ' <span class="timestamp">' + timestamp + '</span></li>'); 
             };
             // Create a function to update the online users list
             chat.client.updateUsers = function (data) {

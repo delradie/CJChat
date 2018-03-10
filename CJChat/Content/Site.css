@@ -157,3 +157,9 @@ textarea {
         float: none;
         margin-left: 0;
     }
+
+.timestamp {
+    font-style: italic;
+    font-weight: lighter;
+    color: #A0A0A0;
+}
