@@ -48,6 +48,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.4.0\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
     </Reference>
@@ -103,6 +109,8 @@
       <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.4.0\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -174,6 +182,28 @@
     <Compile Include="Classes\MessageReceivedEventArgs.cs" />
     <Compile Include="Classes\CustomExtensions.cs" />
     <Compile Include="Classes\MessageStore.cs" />
+    <Compile Include="DataAccess\CJChat.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CJChat.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\CJChat.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CJChat.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\CJChat.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CJChat.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\IpBan.cs">
+      <DependentUpon>CJChat.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\MessageLog.cs">
+      <DependentUpon>CJChat.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\MessageLogAccess.cs" />
     <Compile Include="ErrorHandler\AiHandleErrorAttribute.cs" />
     <Compile Include="Hubs\ChatHub.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -186,8 +216,22 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\CJChat.mdf" />
+    <Content Include="App_Data\CJChat_log.ldf">
+      <DependentUpon>CJChat.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="DataAccess\CJChat.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CJChat.edmx</DependentUpon>
+      <LastGenOutput>CJChat.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DataAccess\CJChat.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CJChat.edmx</DependentUpon>
+      <LastGenOutput>CJChat.cs</LastGenOutput>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -198,6 +242,13 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Connected Services\Application Insights\ConnectedService.json" />
+    <EntityDeploy Include="DataAccess\CJChat.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CJChat.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="DataAccess\CJChat.edmx.diagram">
+      <DependentUpon>CJChat.edmx</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\Nickerbox - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -226,9 +277,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Chat.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
   </ItemGroup>
@@ -244,6 +293,9 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

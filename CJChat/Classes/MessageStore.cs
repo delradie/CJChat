@@ -1,4 +1,5 @@
-﻿using CJChat.Models;
+﻿using CJChat.DataAccess;
+using CJChat.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,26 @@ namespace CJChat.Classes
             Messages = new List<ChatMessage>();
         }
 
+        public static void Init()
+        {
+            IEnumerable<MessageLog> HistoricalMessages = new MessageLogAccess().GetRecentMessages(HistoryLimit);
+
+            if(HistoricalMessages != null && HistoricalMessages.Count() > 0)
+            {
+                Messages.AddRange(
+                    HistoricalMessages.Select(
+                        
+                        x => new ChatMessage()
+                        {
+                            Message = x.MessageText,
+                            SoueceIp = x.SourceIp,
+                            TimeStamp = x.UtcTimestamp,
+                            UserName = x.UserName
+                        })
+                    );
+            }
+        }
+
         public static void MessageReceivedHandler(Object sender, MessageReceivedEventArgs args)
         {
             Messages.Add(args.ReceivedMessage);
@@ -25,6 +46,8 @@ namespace CJChat.Classes
             {
                 Messages = Messages.OrderByDescending(x => x.TimeStamp).Take(HistoryLimit).ToList();
             }
+
+            new MessageLogAccess().LogMessage(args.ReceivedMessage.UserName, args.ReceivedMessage.SoueceIp, args.ReceivedMessage.TimeStamp, args.ReceivedMessage.Message);
         }
     }
 }
