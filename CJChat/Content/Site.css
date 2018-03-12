@@ -163,3 +163,17 @@ textarea {
     font-weight: lighter;
     color: #A0A0A0;
 }
+#users_online ul
+{
+    list-style-type: none;
+    margin:0;
+    padding:0;
+}
+#users_online li:before
+{
+    content:'\f007' ;
+    font-family: "FontAwesome";
+    display: inline-block;
+    padding-right: 6px;
+    vertical-align: middle;
+}
