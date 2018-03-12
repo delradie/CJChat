@@ -177,3 +177,9 @@ textarea {
     padding-right: 6px;
     vertical-align: middle;
 }
+/* remove important once style order has been corrected*/
+.well {
+
+  border: 1px solid #85aa77 !important;
+  background-color: #f6f9f6 !important;
+}
