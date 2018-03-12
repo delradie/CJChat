@@ -184,3 +184,18 @@ textarea {
   border: 1px solid #85aa77 !important;
   background-color: #f6f9f6 !important;
 }
+
+.btn-primary {
+background-color: #e27348 !important;
+background-image: -moz-linear-gradient(top, #e6905b, #e27348) !important;
+background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#e6905b), to(#e27348)) !important;
+background-image: -webkit-linear-gradient(top, #e6905b, #e27348) !important;
+background-image: -o-linear-gradient(top, #e6905b, #e27348) !important;
+background-image: linear-gradient(to bottom, #e6905b, #e27348) !important;
+background-repeat: repeat-x;
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffe6905b', endColorstr='#ffe27348', GradientType=0) !important;
+border-color: #e27348 #e27348 #e6905b !important;
+border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25) !important;
+*background-color: #e27348 !important;
+filter: progid:DXImageTransform.Microsoft.gradient(enabled = false) !important;
+}
