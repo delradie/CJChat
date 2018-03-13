@@ -42,11 +42,12 @@ namespace CJChat.Controllers
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult SignOut()
         {
-            ViewBag.Message = "Your contact page.";
+            Response.Cookies.Remove("NickerBoxUser");
+            Session["UserName"] = null;
 
-            return View();
+            return new RedirectResult("~/");
         }
 
         public ActionResult Chat()
