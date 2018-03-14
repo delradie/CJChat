@@ -1,5 +1,5 @@
 ﻿body {
-    padding-top: 60px;
+    padding-top: 15px;
     padding-bottom: 20px;
 }
 
@@ -198,4 +198,12 @@ border-color: #e27348 #e27348 #e6905b !important;
 border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25) !important;
 *background-color: #e27348 !important;
 filter: progid:DXImageTransform.Microsoft.gradient(enabled = false) !important;
+}
+
+@media (max-width:767px) {
+
+	#online li {
+		display: inline;
+		padding-right: 15px;
+	}
 }
