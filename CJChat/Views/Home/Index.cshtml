@@ -7,6 +7,12 @@
     {
     <p class="lead">Enter a username to continue.</p>
     <p>@Html.TextBox("userName") <input type="submit" value="Enter" /></p>
+    <p>@Html.DropDownList("timezone", TimeZoneInfo.GetSystemTimeZones().Select(t =>
+  new SelectListItem{
+      Text = t.DisplayName,
+      Value = t.Id,
+      Selected = String.Equals(t.Id, ViewBag.DefaultTimeZone)
+  }))</p>
     <p>@Html.CheckBox("remember",true) Remember Me?</p>
     }
 </div>

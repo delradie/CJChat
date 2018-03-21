@@ -55,6 +55,11 @@ namespace CJChat.Hubs
                 Target.ConnectionId = ConnectionId;
             }
 
+            foreach(var Message in Classes.MessageStore.Messages.OrderBy(x => x.TimeStamp))
+            {
+                SendMessage(Message.UserName, Message.Message, Message.TimeStamp, ConnectionId);
+            }
+
             UpdateUsers();
         }
 
@@ -83,11 +88,23 @@ namespace CJChat.Hubs
         {
             DateTime TimeStamp = DateTime.UtcNow;
 
-            Clients.All.AddMessage(userName, message, TimeStamp.ToString("g"));
-
             String SenderIp = Context.Request.GetRemoteIpAddress();
 
-            SignalMessageReceveived(userName, SenderIp, TimeStamp, message);
+            SendMessage(userName, message, TimeStamp, null);
+
+            SignalMessageReceveived(userName, SenderIp, TimeStamp, message);            
+        }
+
+        public void SendMessage(String userName, String message, DateTime timeStamp, String connectionId = null)
+        {
+            if (String.IsNullOrWhiteSpace(connectionId))
+            {
+                Clients.All.AddMessage(userName, message, timeStamp.ToString("yyyy-MM-ddTHH:mm:ssZ"));
+            }
+            else
+            {
+                Clients.Client(connectionId).AddMessage(userName, message, timeStamp.ToString("yyyy-MM-ddTHH:mm:ssZ"));
+            }
         }
         #endregion
 
