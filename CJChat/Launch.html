@@ -4,16 +4,15 @@
     <meta charset="utf-8" />
     <title></title>
     <script type="text/javascript">
-        function launch() {
-            var Url = '/';
-
-            window.open(Url, 'targetWindow',
-                'toolbar=no,location = no,status = no,menubar = no,scrollbars = yes,resizable = yes,width = 500,height = 600');
- return false;
+        var popupWindow = null;
+        function positionedPopup(url, winName, w, h, t, l, scroll) {
+            settings =
+                'height=' + h + ',width=' + w + ',top=' + t + ',left=' + l + ',scrollbars=' + scroll + ',resizable'
+            popupWindow = window.open(url, winName, settings)
         }
     </script>
 </head>
 <body>
-    <a href="javascript:launch()">Launch chat</a>
+    <a onclick="positionedPopup(this.href,'myWindow','500','300','100','200','yes');return false" href="/" target="_blank">Launch chat</a>
 </body>
 </html>
