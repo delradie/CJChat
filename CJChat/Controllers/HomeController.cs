@@ -14,7 +14,7 @@ namespace CJChat.Controllers
 
         public ActionResult Index()
         {
-            String SelectedTimeZone = DefaultTimeZone;
+            String SelectedTimeZone = String.Empty;
 
             if (Request.Cookies["TimeZoneName"] != null
                 && !String.IsNullOrEmpty(Request.Cookies["TimeZoneName"].Value))
@@ -27,6 +27,8 @@ namespace CJChat.Controllers
             {
                 return new RedirectResult("~/Home/Chat");
             }
+
+            SelectedTimeZone = DefaultTimeZone;
 
             IEnumerable<SelectListItem> TimeZones = TZConvert.KnownIanaTimeZoneNames.OrderBy(t => t).Select(t =>
     new SelectListItem
