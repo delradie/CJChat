@@ -10,22 +10,33 @@ namespace CJChat.Controllers
 {
     public class HomeController : Controller
     {
-        private const String DefaultTimeZone = "US Eastern Standard Time";
+        private const String DefaultTimeZone = "US/Eastern";
 
         public ActionResult Index()
         {
-            if (!String.IsNullOrWhiteSpace(Session["UserName"] as String))
+            String SelectedTimeZone = DefaultTimeZone;
+
+            if (Request.Cookies["TimeZoneName"] != null
+                && !String.IsNullOrEmpty(Request.Cookies["TimeZoneName"].Value))
+            { 
+                SelectedTimeZone = Request.Cookies["TimeZoneName"].Value;
+            }
+
+            if (!String.IsNullOrWhiteSpace(Session["UserName"] as String)
+                && !String.IsNullOrWhiteSpace(SelectedTimeZone))
             {
                 return new RedirectResult("~/Home/Chat");
             }
 
-            String SelectedTimeZone = DefaultTimeZone;
+            IEnumerable<SelectListItem> TimeZones = TZConvert.KnownIanaTimeZoneNames.OrderBy(t => t).Select(t =>
+    new SelectListItem
+    {
+        Text = t,
+        Value = t,
+        Selected = String.Equals(t.Trim(), SelectedTimeZone, StringComparison.InvariantCultureIgnoreCase)
+    });
 
-            if (Request.Cookies["TimeZone"] != null)
-            {
-                SelectedTimeZone = Request.Cookies["TimeZone"].Value;
-            }
-
+            ViewBag.TimeZones = TimeZones;
             ViewBag.DefaultTimeZone = SelectedTimeZone;
             return View();
         }
@@ -35,7 +46,7 @@ namespace CJChat.Controllers
         {
             Session["UserName"] = userName;
 
-            Response.Cookies.Add(new HttpCookie("TimeZone", timezone)
+            Response.Cookies.Add(new HttpCookie("TimeZoneName", timezone)
             {
                 Expires = DateTime.UtcNow.AddYears(1)
             });
@@ -75,20 +86,20 @@ namespace CJChat.Controllers
 
             String SelectedTimeZone = DefaultTimeZone;
 
-            if (Request.Cookies["TimeZone"] != null)
+            if (Request.Cookies["TimeZoneName"] != null)
             {
-                SelectedTimeZone = Request.Cookies["TimeZone"].Value;
+                SelectedTimeZone = Request.Cookies["TimeZoneName"].Value;
+            }
+            else
+            {
+                return new RedirectResult("~/");
             }
 
-            ViewBag.SelectedTimeZoneName = SelectedTimeZone;
-            ViewBag.SelectedTimeZoneId = TZConvert.WindowsToIana(SelectedTimeZone);
+            ViewBag.SelectedTimeZoneId = SelectedTimeZone;
 
-            TimeZoneInfo Info = TimeZoneInfo.FindSystemTimeZoneById(SelectedTimeZone);
-            ViewBag.SelectedTimeZone = Info;
-            ViewBag.TimeZoneAdjustment = Info.BaseUtcOffset.Hours;
 
             ViewBag.Title = "NickerBox Chat.";
-           
+
             return View();
         }
     }
