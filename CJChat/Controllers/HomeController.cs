@@ -44,18 +44,18 @@ namespace CJChat.Controllers
         }
 
         [HttpPost]
-        public ActionResult Identify(String userName, String timezone, bool remember)
+        public ActionResult Identify(SignOn input)
         {
-            Session["UserName"] = userName;
+            Session["UserName"] = input.UserName;
 
-            Response.Cookies.Add(new HttpCookie("TimeZoneName", timezone)
+            Response.Cookies.Add(new HttpCookie("TimeZoneName", input.Location)
             {
                 Expires = DateTime.UtcNow.AddYears(1)
             });
 
-            if (remember)
+            if (input.Remember)
             {
-                Response.Cookies.Add(new HttpCookie("NickerBoxUser", userName)
+                Response.Cookies.Add(new HttpCookie("NickerBoxUser", input.UserName)
                 {
                     Expires = DateTime.UtcNow.AddYears(1)
                 });
