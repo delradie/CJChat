@@ -1,12 +1,23 @@
-﻿@{
+﻿@model CJChat.Models.SignOn
+@{
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
+<div class="container">
     @using (Html.BeginForm("Identify", "Home", FormMethod.Post))
     {
-    <p class="lead">Enter a username to continue.</p>
-    <p>@Html.TextBox("userName") <input type="submit" value="Enter" /></p>
-    <p>@Html.CheckBox("remember",true) Remember Me?</p>
+        @Html.ValidationSummary(true, "Please correct the errors to continue.")
+
+    <div>
+        <fieldset>
+
+            <legend>Enter a username and select your location to continue.</legend>
+
+            <p>@Html.TextBoxFor(x => x.UserName) @Html.ValidationMessageFor(x => x.UserName)</p>
+            <p>@Html.DropDownListFor(x => x.Location, (IEnumerable<SelectListItem>)ViewBag.TimeZones) @Html.ValidationMessageFor(x => x.Location)</p>
+            <p>@Html.CheckBoxFor(x => x.Remember, true) Remember Me?</p>
+            <input type="submit" value="Enter" />
+        </fieldset>
+    </div>
     }
 </div>
