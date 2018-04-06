@@ -169,6 +169,7 @@ textarea {
     margin:0;
     padding:0;
 }
+/*
 #users_online li:before
 {
     content:'\f007' ;
@@ -177,7 +178,7 @@ textarea {
     padding-right: 6px;
     vertical-align: middle;
     color:#53937c;
-}
+}*/
 /* remove important once style order has been corrected*/
 .well {
 
